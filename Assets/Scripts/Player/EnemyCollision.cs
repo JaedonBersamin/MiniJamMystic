@@ -11,9 +11,11 @@ public class EnemyCollision : MonoBehaviour
     private GameState gameStateScript;
     [SerializeField]
     private TMP_Text livesText;
+    private SoundController soundController;
     private void Start()
     {
         animator = GetComponent<Animator>();
+        soundController = GameObject.FindGameObjectWithTag("SoundController").GetComponent<SoundController>();
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -22,6 +24,7 @@ public class EnemyCollision : MonoBehaviour
             animator.SetTrigger("Attacked");
             gameStateScript.setLives(gameStateScript.getLives() - 1);
             livesText.text = gameStateScript.getLives() + "";
+            soundController.PlayPlayerHit();
         }
     }
 

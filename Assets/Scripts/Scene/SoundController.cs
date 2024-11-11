@@ -67,7 +67,7 @@ public class SoundController : MonoBehaviour
     public void PlayPlayerHit()
     {
         audioSource.clip = playerHit;
-        audioSource.volume = 1.0f;
+        audioSource.volume = 0.25f;
         audioSource.loop = false;
         audioSource.Play();
     }
