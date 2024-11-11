@@ -1,8 +1,5 @@
 using Pathfinding;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -43,9 +40,9 @@ public class GameState : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        spellsPickedUp = 100;
+        spellsPickedUp = 0;
         lives = 3;
-        spellDelay = 5f;
+        spellDelay = 3f;
         enemyDelay = 5f;
         sigilCount = 1;
         sigilRadius = 3;
@@ -88,33 +85,33 @@ public class GameState : MonoBehaviour
             SceneManager.LoadScene("Lose");
         }
 
-        if (difficulty == Combo.DIFFICULTY_EASY && seconds >= 15)
+        if (difficulty == Combo.DIFFICULTY_EASY && seconds >= 45)
         {
             difficulty = Combo.DIFFICULTY_MEDIUM;
-        } else if (difficulty == Combo.DIFFICULTY_MEDIUM && seconds >= 30)
+        } else if (difficulty == Combo.DIFFICULTY_MEDIUM && seconds >= 90)
         {
             difficulty = Combo.DIFFICULTY_HARD;
-        } else if (difficulty == Combo.DIFFICULTY_HARD && seconds >= 60)
+        } else if (difficulty == Combo.DIFFICULTY_HARD && seconds >= 150)
         {
             difficulty = Combo.DIFFICULTY_MYSTIC;
         }
 
         if (difficulty == Combo.DIFFICULTY_EASY)
         {
-            spellDelay = 5f;
+            spellDelay = 3f;
             enemyDelay = 5f;
         } else if (difficulty == Combo.DIFFICULTY_MEDIUM)
         {
-            spellDelay = 7f;
+            spellDelay = 4f;
             enemyDelay = 4f;
         } else if (difficulty == Combo.DIFFICULTY_HARD)
         {
-            spellDelay = 10f;
+            spellDelay = 5f;
             enemyDelay = 3f;
         } else if (difficulty == Combo.DIFFICULTY_MYSTIC)
         {
             enemyDelay = 2f;
-            spellDelay = 12f;
+            spellDelay = 7f;
         }
 
         sigils = GameObject.FindGameObjectsWithTag("Sigil");
@@ -199,6 +196,11 @@ public class GameState : MonoBehaviour
     public void setDifficulty(string difficulty)
     {
         this.difficulty = difficulty;
+    }
+
+    public int getSeconds()
+    {
+        return seconds;
     }
 
     public void spawnSigils()

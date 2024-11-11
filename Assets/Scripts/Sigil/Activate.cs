@@ -1,10 +1,5 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static System.Runtime.CompilerServices.RuntimeHelpers;
 using Random = UnityEngine.Random;
 
 public class Activate : MonoBehaviour

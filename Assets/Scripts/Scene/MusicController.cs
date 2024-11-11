@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MusicController : MonoBehaviour
@@ -17,16 +15,22 @@ public class MusicController : MonoBehaviour
 
     public void PlayMainMenuMusic()
     {
-        audioSource.clip = mainMenuMusic;
-        audioSource.volume = 1.0f;
-        audioSource.loop = true;
-        audioSource.Play();
+        if (audioSource.clip != mainMenuMusic)
+        {
+            audioSource.clip = mainMenuMusic;
+            audioSource.volume = 1.0f;
+            audioSource.loop = true;
+            audioSource.Play();
+        }
     }
     public void PlayBackgroundMusic()
     {
-        audioSource.clip = backgroundMusic;
-        audioSource.volume = 1.0f;
-        audioSource.loop = true;
-        audioSource.Play();
+        if (audioSource.clip != backgroundMusic)
+        {
+            audioSource.clip = backgroundMusic;
+            audioSource.volume = 1.0f;
+            audioSource.loop = true;
+            audioSource.Play();
+        }
     }
 }

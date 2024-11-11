@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -42,6 +40,23 @@ public class SceneController : MonoBehaviour
 
     public void OnWin()
     {
+        GameState gameState = GameObject.Find("GameState").GetComponent<GameState>();
+        int seconds = gameState.getSeconds();
+        PlayerPrefs.SetInt("seconds", seconds);
         SceneManager.LoadScene("Win");
+    }
+
+    public void OnContinueClick()
+    {
+        MusicController musicController = GameObject.FindGameObjectWithTag("MusicController").GetComponent<MusicController>();
+        musicController.PlayMainMenuMusic();
+        SceneManager.LoadScene("Home");
+    }
+
+    public void OnTutorialClick()
+    {
+        MusicController musicController = GameObject.FindGameObjectWithTag("MusicController").GetComponent<MusicController>();
+        musicController.PlayMainMenuMusic();
+        SceneManager.LoadScene("Tutorial");
     }
 }
