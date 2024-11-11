@@ -42,3 +42,6 @@ sysinfo.txt
 
 # Crashlytics generated files
 crashlytics-build.properties
+Assets/AstarPathfindingProject/ExampleScenes/Example2_Terrain/Pathfinding_Terrain.asset.meta
+Assets/AstarPathfindingProject/package.json.meta
+Assets/Resources/Font/UncialAntiqua-Regular SDF.asset.meta
