@@ -64,7 +64,9 @@
     <Compile Include="Assets\Scripts\Player\Movement.cs" />
     <Compile Include="Assets\Scripts\Scene\MusicController.cs" />
     <Compile Include="Assets\Scripts\Player\EnemyCollision.cs" />
+    <Compile Include="Assets\Scripts\Enemy\EnemyAnimation.cs" />
     <Compile Include="Assets\Scripts\Player\Spell Pickup.cs" />
+    <Compile Include="Assets\Scripts\Camera\CameraMovement.cs" />
     <Compile Include="Assets\Scripts\Scene\SceneController.cs" />
     <Compile Include="Assets\Scripts\Sigil\Activate.cs" />
     <Compile Include="Assets\Scripts\Scene\SoundController.cs" />
