@@ -61,9 +61,9 @@ public class Combo : MonoBehaviour
     Dictionary<string, int> keyComboCount = new Dictionary<string, int>()
     {
         {DIFFICULTY_EASY, 2}, 
-        {DIFFICULTY_MEDIUM, 4}, 
-        {DIFFICULTY_HARD, 5},
-        {DIFFICULTY_MYSTIC, 6}
+        {DIFFICULTY_MEDIUM, 3}, 
+        {DIFFICULTY_HARD, 4},
+        {DIFFICULTY_MYSTIC, 5}
     };
     private string difficulty;
 

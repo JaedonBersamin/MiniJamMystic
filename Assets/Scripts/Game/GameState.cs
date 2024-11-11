@@ -42,8 +42,8 @@ public class GameState : MonoBehaviour
     {
         spellsPickedUp = 0;
         lives = 3;
-        spellDelay = 3f;
-        enemyDelay = 5f;
+        spellDelay = 1f;
+        enemyDelay = 6f;
         sigilCount = 1;
         sigilRadius = 3;
         spawnSigils();
@@ -98,20 +98,20 @@ public class GameState : MonoBehaviour
 
         if (difficulty == Combo.DIFFICULTY_EASY)
         {
-            spellDelay = 3f;
-            enemyDelay = 5f;
+            spellDelay = 1f;
+            enemyDelay = 6f;
         } else if (difficulty == Combo.DIFFICULTY_MEDIUM)
         {
-            spellDelay = 4f;
-            enemyDelay = 4f;
+            spellDelay = 2f;
+            enemyDelay = 5f;
         } else if (difficulty == Combo.DIFFICULTY_HARD)
         {
             spellDelay = 5f;
-            enemyDelay = 3f;
+            enemyDelay = 4f;
         } else if (difficulty == Combo.DIFFICULTY_MYSTIC)
         {
-            enemyDelay = 2f;
             spellDelay = 7f;
+            enemyDelay = 3f;
         }
 
         sigils = GameObject.FindGameObjectsWithTag("Sigil");
