@@ -36,15 +36,20 @@ public class GameState : MonoBehaviour
     [SerializeField]
     private GameObject boundaryObject;
     private GameObject player;
+    [SerializeField]
+    private GameObject[] sigilSpawns;
+    [SerializeField]
+    private GameObject sigilSpawn;
     // Start is called before the first frame update
     void Start()
     {
-        spellsPickedUp = 0;
+        spellsPickedUp = 100;
         lives = 3;
         spellDelay = 5f;
         enemyDelay = 5f;
         sigilCount = 1;
         sigilRadius = 3;
+        spawnSigils();
         StartCoroutine(spawnSpell());
         StartCoroutine(spawnEnemy());
         time = 0;
@@ -122,7 +127,7 @@ public class GameState : MonoBehaviour
         }
         if (!sigilRemaining && sigils.Length > 0)
         {
-            if (sigilCount >= 9)
+            if (sigilCount >= 8)
             {
                 sceneController.OnWin();
             }
@@ -200,15 +205,20 @@ public class GameState : MonoBehaviour
     {
         for (int i = 0; i < sigilCount; i++)
         {
-            float angle = i * Mathf.PI * 2 / sigilCount;
+            if (GameObject.FindGameObjectsWithTag("Sigil").Length >= 8)
+            {
+                break;
+            }
 
-            float x = Mathf.Cos(angle) * sigilRadius;
-            float y = Mathf.Sin(angle) * sigilRadius;
+            int randomSpawn;
+            do
+            {
+                randomSpawn = Random.Range(0, sigilSpawns.Length);
+            } while (sigilSpawns[randomSpawn] == null);
 
-            Vector3 sigilPosition = new Vector3(x, y, 0) + transform.position;
-
-            GameObject newSigil = Instantiate(sigil, sigilPosition, Quaternion.identity);
-            int random = Random.Range(1, 5);
+            GameObject newSigil = Instantiate(sigil, sigilSpawns[randomSpawn].transform.position, Quaternion.identity, sigilSpawn.transform);
+            sigilSpawns[randomSpawn] = null;
+            int random = Random.Range(1, 6);
             Sprite sigilSprite = Resources.Load<Sprite>("Sprites/Sygil/complete_sygil" + random);
             newSigil.GetComponent<SpriteRenderer>().sprite = sigilSprite;
         }

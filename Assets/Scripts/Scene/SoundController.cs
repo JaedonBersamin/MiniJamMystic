@@ -54,7 +54,10 @@ public class SoundController : MonoBehaviour
     }
     public void StopSigilFormation()
     {
-        audioSource.Stop();
+        if (audioSource.clip == sigilFormation)
+        {
+            audioSource.Stop();
+        }
     }
 
     public void PlaySpellCollect()

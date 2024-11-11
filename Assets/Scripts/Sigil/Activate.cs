@@ -14,7 +14,7 @@ public class Activate : MonoBehaviour
     [SerializeField]
     private GameObject comboObject;
     private float xOffset = 0.5f;
-    private float yOffset = 0.5f;
+    private float yOffset = 0.25f;
     private KeyCode keyCode;
     private GameObject currentCombo;
     private float totalWidth;
@@ -29,7 +29,7 @@ public class Activate : MonoBehaviour
     {
         spellsNeeded = 3;
         gameStateScript = GameObject.Find("GameState").GetComponent<GameState>();
-        randomSprite = Random.Range(1, 5);
+        randomSprite = Random.Range(1, 6);
         Sprite sigilSprite = Resources.Load<Sprite>("Sprites/Sygil/complete_sygil" + randomSprite);
         this.GetComponent<SpriteRenderer>().sprite = sigilSprite;
         soundController = GameObject.FindGameObjectWithTag("SoundController").GetComponent<SoundController>();
@@ -91,7 +91,7 @@ public class Activate : MonoBehaviour
     private void displayCombo()
     {
         Combo combo = comboObject.GetComponent<Combo>();
-        combo.generateCombo(Combo.DIFFICULTY_MEDIUM);
+        combo.generateCombo(gameStateScript.getDifficulty());
         soundController.PlaySigilFormation();
 
         List<string> keys = combo.getKeys();
