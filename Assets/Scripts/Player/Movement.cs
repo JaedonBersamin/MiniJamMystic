@@ -13,7 +13,7 @@ public class Movement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerSpeed = 40;
+        playerSpeed = 5;
         transformScale = transform.localScale;
         rb = gameObject.GetComponent<Rigidbody2D>();
         rb.drag = 5;

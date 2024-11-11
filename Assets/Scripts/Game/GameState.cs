@@ -1,3 +1,4 @@
+using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,8 @@ public class GameState : MonoBehaviour
 {
     [SerializeField]
     private GameObject spell;
+    [SerializeField]
+    private GameObject enemy;
     private int spellsPickedUp;
     [SerializeField]
     private TMP_Text spellsCollected;
@@ -20,6 +23,7 @@ public class GameState : MonoBehaviour
     private int seconds;
     private string difficulty;
     private float spellDelay;
+    private float enemyDelay;
     private int sigilCount;
     [SerializeField]
     private GameObject sigil;
@@ -29,17 +33,23 @@ public class GameState : MonoBehaviour
     GameObject pauseCanvas;
     [SerializeField]
     private SceneController sceneController;
+    [SerializeField]
+    private GameObject boundaryObject;
+    private GameObject player;
     // Start is called before the first frame update
     void Start()
     {
         spellsPickedUp = 0;
         lives = 3;
         spellDelay = 5f;
+        enemyDelay = 5f;
         sigilCount = 1;
         sigilRadius = 3;
-        StartCoroutine(spawnSpell(spellDelay));
+        StartCoroutine(spawnSpell());
+        StartCoroutine(spawnEnemy());
         time = 0;
         seconds = 0;
+        player = GameObject.Find("Player");
         difficulty = Combo.DIFFICULTY_EASY;
         gameCanvas = GameObject.FindGameObjectWithTag("GameCanvas");
         pauseCanvas = GameObject.FindGameObjectWithTag("PauseCanvas");
@@ -79,9 +89,27 @@ public class GameState : MonoBehaviour
         } else if (difficulty == Combo.DIFFICULTY_MEDIUM && seconds >= 30)
         {
             difficulty = Combo.DIFFICULTY_HARD;
-        } else if (difficulty ==Combo.DIFFICULTY_HARD && seconds >= 60)
+        } else if (difficulty == Combo.DIFFICULTY_HARD && seconds >= 60)
         {
             difficulty = Combo.DIFFICULTY_MYSTIC;
+        }
+
+        if (difficulty == Combo.DIFFICULTY_EASY)
+        {
+            spellDelay = 5f;
+            enemyDelay = 5f;
+        } else if (difficulty == Combo.DIFFICULTY_MEDIUM)
+        {
+            spellDelay = 7f;
+            enemyDelay = 4f;
+        } else if (difficulty == Combo.DIFFICULTY_HARD)
+        {
+            spellDelay = 10f;
+            enemyDelay = 3f;
+        } else if (difficulty == Combo.DIFFICULTY_MYSTIC)
+        {
+            enemyDelay = 2f;
+            spellDelay = 12f;
         }
 
         sigils = GameObject.FindGameObjectsWithTag("Sigil");
@@ -103,20 +131,39 @@ public class GameState : MonoBehaviour
         }
     }
 
-    IEnumerator spawnSpell(float delay)
+    IEnumerator spawnSpell()
     {
-        float leftEdge = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, Camera.main.nearClipPlane)).x;
-        float rightEdge = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, Camera.main.nearClipPlane)).x;
-        float randomX = Random.Range(leftEdge, rightEdge);
+        Bounds bounds = boundaryObject.GetComponent<Renderer>().bounds;
 
-        float bottomEdge = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, Camera.main.nearClipPlane)).y;
-        float topEdge = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, Camera.main.nearClipPlane)).y;
-        float randomY = Random.Range(bottomEdge, topEdge);
+        Vector2 minBounds = new Vector2(bounds.min.x, bounds.min.y);
+        Vector2 maxBounds = new Vector2(bounds.max.x, bounds.max.y);
+
+        float randomX = Random.Range(minBounds.x, maxBounds.x);
+        float randomY = Random.Range(minBounds.y, maxBounds.y);
 
         Vector3 spellPos = new Vector3(randomX, randomY, 0);
         Instantiate(spell, spellPos, Quaternion.identity);
-        yield return new WaitForSeconds(delay);
-        StartCoroutine(spawnSpell(delay));
+        yield return new WaitForSeconds(spellDelay);
+        StartCoroutine(spawnSpell());
+    }
+
+    IEnumerator spawnEnemy()
+    {
+        Bounds bounds = boundaryObject.GetComponent<Renderer>().bounds;
+
+        Vector2 minBounds = new Vector2(bounds.min.x, bounds.min.y);
+        Vector2 maxBounds = new Vector2(bounds.max.x, bounds.max.y);
+
+        float randomX = Random.Range(minBounds.x, maxBounds.x);
+        float randomY = Random.Range(minBounds.y, maxBounds.y);
+
+        Vector3 enemyPos = new Vector3(randomX, randomY, 0);
+        GameObject player = GameObject.Find("Player");
+        GameObject newEnemy = Instantiate(enemy, enemyPos, Quaternion.identity);
+        newEnemy.GetComponent<AIDestinationSetter>().target = player.transform;
+
+        yield return new WaitForSeconds(enemyDelay);
+        StartCoroutine(spawnEnemy());
     }
     public int getSpellsPickedUp()
     {
