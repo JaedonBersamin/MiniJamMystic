@@ -415,7 +415,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Congratulations
 
-    You Unleashed B''Thulu in '
+    You Unleashed B''Thulu in  -1 seconds'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ea82311eca6e2ae40bd0ee81014dbf14, type: 2}
   m_sharedMaterial: {fileID: -7526256389141476319, guid: ea82311eca6e2ae40bd0ee81014dbf14, type: 2}
